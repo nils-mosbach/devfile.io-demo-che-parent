@@ -1,0 +1,28 @@
+schemaVersion: 2.1.0
+metadata:
+  name: devfile-test
+components:
+
+  # PostgreSQL Database
+  - name: db-service
+    container:
+      image: "bitnami/postgresql:12.5.0"
+      env:
+        - value: root
+          name: POSTGRES_USER
+        - value: password
+          name: POSTGRES_PASSWORD
+      volumeMounts:
+        - name: data-db
+          path: /bitnami/postgresql
+      memoryLimit: 256Mi
+      endpoints:
+        - exposure: internal
+          name: postgres
+          protocol: tcp
+          targetPort: 5432
+ 
+  # volumes
+  - name: data-db
+    volume:
+      size: 2Gi
